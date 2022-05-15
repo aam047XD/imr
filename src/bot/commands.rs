@@ -151,6 +151,17 @@ pub trait Command {
             None => Err("Feed does not exist".to_string()),
         }
     }
+
+    fn parse_filter(&self, params: &str) -> Result<Vec<String>, String> {
+        let filter_words: Vec<String> =
+            params.split(',').map(|s| s.trim().to_lowercase()).collect();
+
+        if filter_words.len() > 7 {
+            return Err("The number of filter words is limited by 7".to_string());
+        }
+
+        Ok(filter_words)
+    }
 }
 
 fn template_example(template: &str) -> Result<String, String> {
